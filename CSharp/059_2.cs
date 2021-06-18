@@ -74,7 +74,7 @@ public class Program
 			}
 
 			bit = 1;
-			foreach (uint goal in goals) {
+			foreach (int goal in goals) {
 				WriteLine((bits[goal] & bit) != 0 ? "Yes" : "No");
 				bit <<= 1;
 			}
