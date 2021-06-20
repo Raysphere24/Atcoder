@@ -74,12 +74,16 @@ public class Program
 		var L = new List<Vertex>();
 		var S = new List<Vertex>();
 
+		// S から頂点を削除するときに選択すべき index を表す
+		// 予め決められていない場合は S の末尾から消す
 		var eraseIndices = new List<int>();
 
 		var output = new StringBuilder();
 
 		foreach (int iteration in Range(1, K)) {
 			if (iteration > 1) {
+				// 末尾の 0 をすべて消したあと末尾から 1 を引く
+				// 例: {0, 1, 2, 0, 0} -> {0, 1, 1}
 				while (eraseIndices[^1] == 0)
 					eraseIndices.RemoveAt(eraseIndices.Count - 1);
 				eraseIndices[^1]--;
@@ -94,6 +98,7 @@ public class Program
 				v.Visited = false;
 			}
 
+			// トポロジカルソート
 			while (S.Any()) {
 				if (eraseIndices.Count == L.Count)
 					eraseIndices.Add(S.Count - 1);
