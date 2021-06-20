@@ -9,7 +9,6 @@ using static System.Console;
 using static System.Linq.Enumerable;
 
 using static Scanner;
-using static Utils;
 
 static class Scanner
 {
@@ -31,26 +30,14 @@ static class Scanner
 	public static double NextDouble() => double.Parse(NextToken());
 }
 
-static class Utils
-{
-	public static T[] ReadArray<T>(Func<string, T> selector)
-		=> ReadLine()!.Split().Select(selector).ToArray();
-
-	public static T[] MakeArray<T>(int length, Func<int, T> selector)
-		=> Range(0, length).Select(selector).ToArray();
-}
-
 class Vertex
 {
 	public readonly List<Vertex> Neighbors = new List<Vertex>();
-	public int Index;
+	public readonly int Name;
 	public int InDegree;
 	public int TempInDegree;
-	public bool Visited;
 
-	public Vertex(int index) { Index = index; }
-
-	public override string ToString() => (Index + 1).ToString();
+	public Vertex(int name) { Name = name; }
 }
 
 public class Program
@@ -61,9 +48,9 @@ public class Program
 		int M = NextInt();
 		int K = NextInt();
 
-		Vertex[] vertices = MakeArray(N, i => new Vertex(i));
+		Vertex[] vertices = Range(1, N).Select(i => new Vertex(i)).ToArray();
 
-		foreach (int _ in Range(0, M)) {
+		foreach (int _ in Range(1, M)) {
 			int a = NextInt() - 1;
 			int b = NextInt() - 1;
 
@@ -71,7 +58,7 @@ public class Program
 			vertices[b].InDegree++;
 		}
 
-		var L = new List<Vertex>();
+		var L = new List<int>();
 		var S = new List<Vertex>();
 
 		// S から頂点を削除するときに選択すべき index を表す
@@ -82,7 +69,7 @@ public class Program
 
 		foreach (int iteration in Range(1, K)) {
 			if (iteration > 1) {
-				// 末尾の 0 をすべて消したあと末尾から 1 を引く
+				// eraseIndices の末尾の 0 をすべて消したあと末尾から 1 を引く
 				// 例: {0, 1, 2, 0, 0} -> {0, 1, 1}
 				while (eraseIndices[^1] == 0)
 					eraseIndices.RemoveAt(eraseIndices.Count - 1);
@@ -95,7 +82,6 @@ public class Program
 
 			foreach (Vertex v in vertices) {
 				v.TempInDegree = v.InDegree;
-				v.Visited = false;
 			}
 
 			// トポロジカルソート (Kahn's algorithm)
@@ -107,12 +93,10 @@ public class Program
 				Vertex v = S[eraseIndex];
 				S.RemoveAt(eraseIndex);
 
-				if (v.Visited) continue;
-				v.Visited = true;
-				L.Add(v);
+				L.Add(v.Name);
 
 				foreach (Vertex n in v.Neighbors) {
-					if (--n.TempInDegree == 0 && !n.Visited) S.Add(n);
+					if (--n.TempInDegree == 0) S.Add(n);
 				}
 			}
 
