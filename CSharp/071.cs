@@ -98,7 +98,7 @@ public class Program
 				v.Visited = false;
 			}
 
-			// トポロジカルソート
+			// トポロジカルソート (Kahn's algorithm)
 			while (S.Any()) {
 				if (eraseIndices.Count == L.Count)
 					eraseIndices.Add(S.Count - 1);
