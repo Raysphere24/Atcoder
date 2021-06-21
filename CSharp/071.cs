@@ -67,8 +67,8 @@ public class Program
 
 		var output = new StringBuilder();
 
-		foreach (int iteration in Range(1, K)) {
-			if (iteration > 1) {
+		foreach (int i in Range(1, K)) {
+			if (i > 1) {
 				// eraseIndices の末尾の 0 をすべて消したあと末尾から 1 を引く
 				// 例: {0, 1, 2, 0, 0} -> {0, 1, 1}
 				while (eraseIndices[^1] == 0)
@@ -100,7 +100,7 @@ public class Program
 				}
 			}
 
-			if (vertices.Any(v => v.TempInDegree > 0) || iteration < K && eraseIndices.All(x => x == 0)) {
+			if (i == 1 && vertices.Any(v => v.TempInDegree > 0) || i < K && eraseIndices.All(x => x == 0)) {
 				WriteLine(-1);
 				return;
 			}
