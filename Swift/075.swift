@@ -2,7 +2,7 @@ import Foundation
 
 let N = UInt(readLine()!)!
 
-// sqrt(N) 以下の奇素数のリスト
+// √N 以下の奇素数のリスト
 var oddPrimes: [UInt] = []
 
 // 3 以上 √N 以下の奇数でループ
@@ -14,7 +14,7 @@ outerLoop: for i in stride(from: 3, through: UInt(sqrt(Double(N))), by: 2) {
 	oddPrimes.append(i)
 }
 
-// N の素因数の数を求める (sqrt(N) 以下の素数で順に割っていく)
+// N の素因数の数を求める
 func numPrimeFactors(_ N: UInt) -> Int {
 	// 素数 2 を事前に処理しておく
 	var result = N.trailingZeroBitCount
