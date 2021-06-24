@@ -62,7 +62,6 @@ public class Program
 		var S = new List<Vertex>();
 
 		// S から頂点を削除するときに選択すべき index を表す
-		// 予め決められていない場合は S の末尾から消す
 		var eraseIndices = new List<int>();
 
 		var output = new StringBuilder();
@@ -86,6 +85,7 @@ public class Program
 
 			// トポロジカルソート (Kahn's algorithm)
 			while (S.Any()) {
+				// 消す位置が予め決められていない場合は S の末尾から消す
 				if (eraseIndices.Count == L.Count)
 					eraseIndices.Add(S.Count - 1);
 
@@ -100,6 +100,7 @@ public class Program
 				}
 			}
 
+			// 1つめの条件はループの存在、2つめの条件は消す位置に関して選択肢が残っていないことを表す
 			if (i == 1 && vertices.Any(v => v.TempInDegree > 0) || i < K && eraseIndices.All(x => x == 0)) {
 				WriteLine(-1);
 				return;
