@@ -100,7 +100,7 @@ public class Program
 				}
 			}
 
-			// 1つめの条件はループの存在、2つめの条件は消す位置に関して選択肢が残っていないことを表す
+			// 1つめの条件はループが存在すること、2つめの条件は消す位置に関して選択肢が残っていないことを表す
 			if (i == 1 && vertices.Any(v => v.TempInDegree > 0) || i < K && eraseIndices.All(x => x == 0)) {
 				WriteLine(-1);
 				return;
