@@ -8,8 +8,8 @@ var oddPrimes: [UInt] = []
 // 3 以上 √N 以下の奇数でループ
 outerLoop: for i in stride(from: 3, through: UInt(sqrt(Double(N))), by: 2) {
 	for p in oddPrimes {
-		if i % p == 0 { continue outerLoop } // i は素数でない
 		if p * p > i { break } // i は素数
+		if i % p == 0 { continue outerLoop } // i は素数でない
 	}
 	oddPrimes.append(i)
 }
