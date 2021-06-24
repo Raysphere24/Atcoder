@@ -1,12 +1,23 @@
 import Foundation
 
+// 括弧が重なって見にくいため、パイプ演算子を定義 (F# style)
+precedencegroup ForwardPipe {
+	associativity: left
+}
+
+infix operator |> : ForwardPipe
+
+func |> <T, U>(value: T, function: ((T) -> U)) -> U {
+	return function(value)
+}
+
 let N = UInt(readLine()!)!
 
 // √N 以下の奇素数のリスト
 var oddPrimes: [UInt] = []
 
 // 3 以上 √N 以下の奇数でループ
-outerLoop: for i in stride(from: 3, through: UInt(sqrt(Double(N))), by: 2) {
+outerLoop: for i in stride(from: 3, through: (N |> Double.init |> sqrt |> UInt.init), by: 2) {
 	for p in oddPrimes {
 		if p * p > i { break } // i は素数
 		if i % p == 0 { continue outerLoop } // i は素数でない
@@ -36,4 +47,5 @@ func numPrimeFactors(_ N: UInt) -> Int {
 }
 
 //print(numPrimeFactors(N))
-print(Int(ceil(log2(Double(numPrimeFactors(N))))))
+//print(Int(ceil(log2(Double(numPrimeFactors(N))))))
+print(N |> numPrimeFactors |> Double.init |> log2 |> ceil |> Int.init)
