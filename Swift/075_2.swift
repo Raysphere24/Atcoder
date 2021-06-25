@@ -34,6 +34,5 @@ func numPrimeFactors(_ N: UInt) -> Int {
 	return result
 }
 
-//print(numPrimeFactors(N))
 //print(Int(ceil(log2(Double(numPrimeFactors(N))))))
 print(N |> numPrimeFactors |> Double.init |> log2 |> ceil |> Int.init)
