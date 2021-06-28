@@ -43,9 +43,7 @@ fun search(a: Int, b: Int, x: Sample, y: Sample): Int {
 }
 
 fun main() {
-	val numSequences = readLine()!!.toInt()
-
-	for (iteration in 1 .. numSequences) {
+	repeat(readLine()!!.toInt()) {
 		val length = readLine()!!.toInt()
 
 		val result = if (length == 1) getValue(1) else {
