@@ -1,5 +1,4 @@
 import java.util.Scanner
-import kotlin.math.max
 
 fun main() {
 	val input = Scanner(System.`in`)
@@ -40,7 +39,7 @@ fun main() {
 
 		val b = search(currentRowIndex + 1, assignedRows + 1)
 
-		return max(a, b)
+		return maxOf(a, b)
 	}
 
 	println(search(0, 0))
