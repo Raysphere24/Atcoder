@@ -3,12 +3,11 @@ import java.util.Scanner
 
 fun main() {
 	val input = Scanner(System.`in`)
-	val Q = input.nextInt()
 
 	val A = ArrayList<Int>()
 	val B = ArrayList<Int>()
 
-	for (i in 1 .. Q) {
+	repeat(input.nextInt()) {
 		val t = input.nextInt()
 		val x = input.nextInt()
 
