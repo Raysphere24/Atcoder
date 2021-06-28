@@ -9,7 +9,6 @@ using static System.Console;
 using static System.Linq.Enumerable;
 
 using static Scanner;
-using static Utils;
 
 static class Scanner
 {
@@ -31,26 +30,14 @@ static class Scanner
 	public static double NextDouble() => double.Parse(NextToken());
 }
 
-static class Utils
-{
-	public static T[] ReadArray<T>(Func<string, T> selector)
-		=> ReadLine()!.Split().Select(selector).ToArray();
-
-	public static T[] MakeArray<T>(int length, Func<int, T> selector)
-		=> Range(0, length).Select(selector).ToArray();
-}
-
 class Vertex
 {
 	public readonly List<Vertex> Neighbors = new List<Vertex>();
-	public int Index;
+	public readonly int Name;
 	public int InDegree;
 	public int TempInDegree;
-	public bool Visited;
 
-	public Vertex(int index) { Index = index; }
-
-	public override string ToString() => (Index + 1).ToString();
+	public Vertex(int name) { Name = name; }
 }
 
 public class Program
@@ -61,9 +48,9 @@ public class Program
 		int M = NextInt();
 		int K = NextInt();
 
-		Vertex[] vertices = MakeArray(N, i => new Vertex(i));
+		Vertex[] vertices = Range(1, N).Select(i => new Vertex(i)).ToArray();
 
-		foreach (int _ in Range(0, M)) {
+		foreach (int _ in Range(1, M)) {
 			int a = NextInt() - 1;
 			int b = NextInt() - 1;
 
@@ -71,15 +58,18 @@ public class Program
 			vertices[b].InDegree++;
 		}
 
-		var L = new List<Vertex>();
+		var L = new List<int>();
 		var S = new List<Vertex>();
 
+		// S から頂点を削除するときに選択すべき index を表す
 		var eraseIndices = new List<int>();
 
 		var output = new StringBuilder();
 
-		foreach (int iteration in Range(1, K)) {
-			if (iteration > 1) {
+		foreach (int i in Range(1, K)) {
+			if (i > 1) {
+				// eraseIndices の末尾の 0 をすべて消したあと末尾から 1 を引く
+				// 例: {0, 1, 2, 0, 0} -> {0, 1, 1}
 				while (eraseIndices[^1] == 0)
 					eraseIndices.RemoveAt(eraseIndices.Count - 1);
 				eraseIndices[^1]--;
@@ -91,10 +81,11 @@ public class Program
 
 			foreach (Vertex v in vertices) {
 				v.TempInDegree = v.InDegree;
-				v.Visited = false;
 			}
 
+			// トポロジカルソート (Kahn's algorithm)
 			while (S.Any()) {
+				// 消す位置が予め決められていない場合は S の末尾から消す
 				if (eraseIndices.Count == L.Count)
 					eraseIndices.Add(S.Count - 1);
 
@@ -102,16 +93,15 @@ public class Program
 				Vertex v = S[eraseIndex];
 				S.RemoveAt(eraseIndex);
 
-				if (v.Visited) continue;
-				v.Visited = true;
-				L.Add(v);
+				L.Add(v.Name);
 
 				foreach (Vertex n in v.Neighbors) {
-					if (--n.TempInDegree == 0 && !n.Visited) S.Add(n);
+					if (--n.TempInDegree == 0) S.Add(n);
 				}
 			}
 
-			if (vertices.Any(v => v.TempInDegree > 0) || iteration < K && eraseIndices.All(x => x == 0)) {
+			// 1つめの条件はループが存在すること、2つめの条件は消す位置に関して選択肢が残っていないことを表す
+			if (i == 1 && vertices.Any(v => v.TempInDegree > 0) || i < K && eraseIndices.All(x => x == 0)) {
 				WriteLine(-1);
 				return;
 			}

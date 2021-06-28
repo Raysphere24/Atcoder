@@ -18,7 +18,7 @@ public class Program
 			int pos = B.BinarySearch(x);
 
 			if (pos < 0) {
-				pos = -1 - pos;
+				pos = ~pos;
 
 				if (pos == B.Count)
 					B.Add(x);
