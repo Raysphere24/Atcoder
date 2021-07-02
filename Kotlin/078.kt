@@ -1,13 +1,13 @@
 import java.util.Scanner
 
 fun main() {
-	val input = Scanner(System.`in`)
+	with(Scanner(System.`in`)) {
+		val count = IntArray(nextInt())
 
-	val count = IntArray(input.nextInt())
+		repeat(nextInt()) {
+			count[maxOf(nextInt(), nextInt()) - 1]++
+		}
 
-	repeat(input.nextInt()) {
-		count[maxOf(input.nextInt(), input.nextInt()) - 1]++
+		println(count.count { it == 1 })
 	}
-
-	println(count.count { it == 1 })
 }
