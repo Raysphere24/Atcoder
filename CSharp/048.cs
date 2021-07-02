@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using static System.Console;
-using static System.Math;
 using static System.Linq.Enumerable;
 
 public class Program

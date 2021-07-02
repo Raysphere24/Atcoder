@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 
 using static System.Console;
-//using static System.Math
 using static System.Linq.Enumerable;
 
 using Connection = System.Collections.Generic.List<Vertex>;

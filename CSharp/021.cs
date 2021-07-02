@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using static System.Console;
-using static System.Math;
 using static System.Linq.Enumerable;
 
 public class Vertex

@@ -4,7 +4,6 @@ using System.Text;
 using System.Collections.Generic;
 
 using static System.Console;
-//using static System.Math
 using static System.Linq.Enumerable;
 
 public static class Program
