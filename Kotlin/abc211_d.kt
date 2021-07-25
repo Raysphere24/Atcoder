@@ -38,7 +38,8 @@ fun main(args: Array<String>) {
 				queue.addFirst(neighbor)
 			}
 
-			neighbor.numPaths = (neighbor.numPaths + vertex.numPaths) % 1000000007
+			neighbor.numPaths += vertex.numPaths
+			neighbor.numPaths %= 1000000007
 		}
 	}
 
